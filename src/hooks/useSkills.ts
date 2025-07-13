@@ -18,7 +18,7 @@ export const useSkills = () => {
       }
       
       console.log("Skills fetched:", data);
-      return data;
+      return data || [];
     },
   });
 };
