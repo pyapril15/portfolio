@@ -6,6 +6,7 @@ import { Mail, Github, Linkedin, Phone, MapPin, Send } from "lucide-react";
 import GlassCard from "../components/GlassCard";
 import { usePersonalInfo } from "../hooks/usePersonalInfo";
 import { supabase } from "@/integrations/supabase/client";
+import {DotLottieReact} from "@lottiefiles/dotlottie-react";
 
 const Contact = () => {
   const [heroRef, heroInView] = useInView({ threshold: 0.3 });
@@ -57,7 +58,12 @@ const Contact = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center pt-24">
-        <div className="text-white text-xl">Loading contact information...</div>
+        <DotLottieReact
+            src="https://lottie.host/206cf556-6aab-4cc8-aa2d-7598ec0fbedc/jvDXSqpSNx.lottie"
+            loop
+            autoplay
+            className="size-2/3"
+        />
       </div>
     );
   }
@@ -104,7 +110,7 @@ const Contact = () => {
                 animate={heroInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.1 }}
               >
-                <GlassCard className="text-center cursor-pointer">
+                <GlassCard className="text-center cursor-pointer p-6">
                   <div className="flex justify-center mb-4">
                     <div className="p-3 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full">
                       <Mail size={24} className="text-white" />
@@ -124,7 +130,7 @@ const Contact = () => {
                 animate={heroInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <GlassCard className="text-center cursor-pointer">
+                <GlassCard className="text-center cursor-pointer p-6">
                   <div className="flex justify-center mb-4">
                     <div className="p-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full">
                       <Phone size={24} className="text-white" />
@@ -143,7 +149,7 @@ const Contact = () => {
                 animate={heroInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
-                <GlassCard className="text-center">
+                <GlassCard className="text-center p-6">
                   <div className="flex justify-center mb-4">
                     <div className="p-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full">
                       <MapPin size={24} className="text-white" />
@@ -204,7 +210,7 @@ const Contact = () => {
             animate={formInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
           >
-            <GlassCard>
+            <GlassCard className="p-6">
               <h2 className="text-3xl font-bold text-white mb-6 text-center">
                 Send Me a Message
               </h2>

@@ -13,9 +13,9 @@ const GlassCard = ({ children, className, hover = true }: GlassCardProps) => {
   const cardContent = (
     <div
       className={cn(
-        "backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6",
+        "backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl",
         "shadow-xl shadow-black/20",
-        hover && "transition-all duration-300 hover:bg-white/20 hover:shadow-2xl hover:shadow-purple-500/20",
+        hover && "hover:border-[#00e5ff]/40 transition-all duration-300",
         className
       )}
     >

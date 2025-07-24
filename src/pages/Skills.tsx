@@ -5,6 +5,7 @@ import {Award} from "lucide-react";
 import GlassCard from "../components/GlassCard";
 import {useSkills} from "../hooks/useSkills";
 import {useCertifications} from "../hooks/useCertifications";
+import {DotLottieReact} from "@lottiefiles/dotlottie-react";
 
 const Skills = () => {
     const [heroRef, heroInView] = useInView({threshold: 0.3});
@@ -45,7 +46,12 @@ const Skills = () => {
     if (skillsLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center pt-24">
-                <div className="text-white text-xl">Loading skills...</div>
+                <DotLottieReact
+                    src="https://lottie.host/206cf556-6aab-4cc8-aa2d-7598ec0fbedc/jvDXSqpSNx.lottie"
+                    loop
+                    autoplay
+                    className="size-2/3"
+                />
             </div>
         );
     }
@@ -126,7 +132,7 @@ const Skills = () => {
                                             animate={skillsInView ? {opacity: 1, scale: 1} : {}}
                                             transition={{duration: 0.5, delay: index * 0.1}}
                                         >
-                                            <GlassCard className="text-center h-full">
+                                            <GlassCard className="text-center h-full p-6">
                                                 <div className="text-4xl mb-4">{skill.icon}</div>
                                                 <h3 className="text-lg font-bold text-white mb-2">{skill.name}</h3>
                                                 <p className="text-gray-300 text-sm mb-4 leading-relaxed">
@@ -167,7 +173,7 @@ const Skills = () => {
                                     animate={skillsInView ? {opacity: 1, scale: 1} : {}}
                                     transition={{duration: 0.5, delay: index * 0.1}}
                                 >
-                                    <GlassCard className="text-center h-full">
+                                    <GlassCard className="text-center h-full p-6">
                                         <div className="text-4xl mb-4">{skill.icon}</div>
                                         <h3 className="text-lg font-bold text-white mb-2">{skill.name}</h3>
                                         <p className="text-gray-300 text-sm mb-4 leading-relaxed">
@@ -225,7 +231,7 @@ const Skills = () => {
                                     animate={certsInView ? {opacity: 1, y: 0} : {}}
                                     transition={{duration: 0.6, delay: index * 0.1}}
                                 >
-                                    <GlassCard className="text-center h-full">
+                                    <GlassCard className="text-center h-full p-6">
                                         <div className="flex justify-center mb-4">
                                             <div
                                                 className="p-3 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full">

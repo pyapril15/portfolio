@@ -5,6 +5,7 @@ import { Calendar, MapPin, GraduationCap, Trophy, Code, Target } from "lucide-re
 import GlassCard from "../components/GlassCard";
 import { usePersonalInfo } from "../hooks/usePersonalInfo";
 import { useJourneyTimeline } from "../hooks/useJourneyTimeline";
+import {DotLottieReact} from "@lottiefiles/dotlottie-react";
 
 const About = () => {
   const [heroRef, heroInView] = useInView({ threshold: 0.3 });
@@ -23,7 +24,12 @@ const About = () => {
   if (personalLoading || timelineLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center pt-24">
-        <div className="text-white text-xl">Loading about information...</div>
+        <DotLottieReact
+            src="https://lottie.host/206cf556-6aab-4cc8-aa2d-7598ec0fbedc/jvDXSqpSNx.lottie"
+            loop
+            autoplay
+            className="size-2/3"
+        />
       </div>
     );
   }
@@ -166,7 +172,7 @@ const About = () => {
 
                   {/* Content Card */}
                   <div className={`w-full md:w-5/12 ${isEven ? "pr-8" : "pl-8"}`}>
-                    <GlassCard>
+                    <GlassCard className="p-6">
                       <div className="space-y-4">
                         <div>
                           <div className={`text-sm font-bold bg-gradient-to-r ${item.color} bg-clip-text text-transparent mb-2`}>
