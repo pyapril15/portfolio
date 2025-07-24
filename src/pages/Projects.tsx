@@ -16,7 +16,7 @@ const Projects = () => {
   
   const { data: projectsData, isLoading } = useProjects();
 
-  const tabs = ["All Projects", "Mobile App", "Website", "Enterprise"];
+  const tabs = ["All Projects", "Mobile App", "Website", "Desktop"];
 
   const filteredProjects = projectsData?.filter(project => 
     activeTab === "All Projects" || project.category === activeTab

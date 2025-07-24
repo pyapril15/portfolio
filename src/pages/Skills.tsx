@@ -16,19 +16,31 @@ const Skills = () => {
   const { data: skillsData, isLoading: skillsLoading } = useSkills();
   const { data: certificationsData, isLoading: certsLoading } = useCertifications();
 
-  const skillCategories = ["All Skills", "Frontend Development", "Backend Development", "Mobile Development", "Database & Cloud", "Development Tools"];
+  const skillCategories = [
+    "All Skills",
+    "Programming Languages",
+    "Frontend Development",
+    "Backend Development",
+    "Database & Cloud",
+    "Data Analysis",
+    "Deployment Tools",
+    "Others"
+  ];
 
-  const filteredSkills = skillsData?.filter(skill => 
-    activeTab === "All Skills" || skill.category === activeTab
+  const filteredSkills = skillsData?.filter(skill =>
+      activeTab === "All Skills" || skill.category === activeTab
   ) || [];
 
-  const groupedSkills = filteredSkills.reduce((acc, skill) => {
-    if (!acc[skill.category]) {
-      acc[skill.category] = [];
+  const groupedSkills = {};
+
+  skillCategories.forEach(category => {
+    if (category === "All Skills") return; // Skip "All Skills" in grouping
+
+    const skillsInCategory = filteredSkills.filter(skill => skill.category === category);
+    if (skillsInCategory.length > 0) {
+      groupedSkills[category] = skillsInCategory;
     }
-    acc[skill.category].push(skill);
-    return acc;
-  }, {});
+  });
 
   if (skillsLoading) {
     return (
