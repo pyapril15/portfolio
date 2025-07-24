@@ -20,10 +20,10 @@ const Skills = () => {
         "Programming Languages",
         "Frontend Development",
         "Backend Development",
-        "Cloud & Deployment",
+        "Development Tools",
         "Database",
+        "Cloud & Deployment",
         "Data Analysis",
-        "Deployment Tools",
         "Design & Other"
     ];
 
