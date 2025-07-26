@@ -12,18 +12,31 @@ import {
     Coffee,
     Twitter,
     Instagram,
-    Globe
+    Globe,
+    ExternalLink
 } from "lucide-react";
 
+interface PersonalInfo {
+    name: string;
+    email: string;
+    github_url?: string;
+    linkedin_url?: string;
+    role: string;
+}
+
+interface FooterProps {
+    personalInfo: PersonalInfo;
+}
+
 // Enhanced Professional Footer Component
-const Footer = ({ personalInfo }) => {
+const Footer = ({ personalInfo }: FooterProps) => {
     const currentYear = new Date().getFullYear();
 
     const footerNavigation = [
         { name: 'Home', href: '#home' },
         { name: 'About', href: '#about' },
         { name: 'Projects', href: '#projects' },
-        { name: 'Services', href: '#services' },
+        { name: 'Skills', href: '#skills' },
         { name: 'Contact', href: '#contact' }
     ];
 
@@ -35,12 +48,28 @@ const Footer = ({ personalInfo }) => {
     ];
 
     const socialLinks = [
-        { icon: Github, href: personalInfo?.github_url, label: 'GitHub', color: 'hover:text-gray-300' },
-        { icon: Linkedin, href: personalInfo?.linkedin_url, label: 'LinkedIn', color: 'hover:text-blue-400' },
-        { icon: Mail, href: `mailto:${personalInfo?.email}`, label: 'Email', color: 'hover:text-green-400' },
-        { icon: Twitter, href: '#', label: 'Twitter', color: 'hover:text-blue-400' },
-        { icon: Instagram, href: '#', label: 'Instagram', color: 'hover:text-pink-400' }
-    ].filter(social => social.href && social.href !== '#');
+        {
+            icon: Github,
+            href: personalInfo?.github_url,
+            label: 'GitHub',
+            color: 'hover:text-gray-300',
+            description: 'View my code repositories'
+        },
+        {
+            icon: Linkedin,
+            href: personalInfo?.linkedin_url,
+            label: 'LinkedIn',
+            color: 'hover:text-blue-400',
+            description: 'Connect with me professionally'
+        },
+        {
+            icon: Mail,
+            href: `mailto:${personalInfo?.email}`,
+            label: 'Email',
+            color: 'hover:text-green-400',
+            description: 'Send me a message'
+        }
+    ].filter(social => social.href && social.href !== '#' && social.href !== 'mailto:undefined');
 
     const achievements = [
         { icon: Award, text: "15+ Projects Completed" },
@@ -49,9 +78,24 @@ const Footer = ({ personalInfo }) => {
         { icon: Coffee, text: "100+ Cups of Coffee" }
     ];
 
+    const handleNewsletterSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        // Handle newsletter subscription
+        const form = e.target as HTMLFormElement;
+        const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+
+        if (email) {
+            // Here you would typically send the email to your backend
+            console.log('Newsletter subscription:', email);
+            // Show success message
+            alert('Thank you for subscribing to my newsletter!');
+            form.reset();
+        }
+    };
+
     return (
-        <footer className="relative bg-gradient-to-br from-purple-900 via-purple-900 to-gray-900 border-t border-gray-700/50 overflow-hidden">
-            {/* Background Pattern */}
+        <footer className="relative bg-gradient-to-br from-gray-900/95 via-purple-900/95 to-gray-900/95 backdrop-blur-sm border-t border-gray-700/50 overflow-hidden">
+            {/* Background Pattern - Consistent with main theme */}
             <div className="absolute inset-0 opacity-5">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(139,92,246,0.3),transparent_50%)]"></div>
                 <div
@@ -114,10 +158,16 @@ const Footer = ({ personalInfo }) => {
                                         transition={{ duration: 0.5, delay: index * 0.1 }}
                                         viewport={{ once: true }}
                                         whileHover={{ scale: 1.1, y: -2 }}
-                                        className={`p-3 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 text-gray-400 ${social.color} transition-all duration-300 hover:bg-white/10 hover:border-white/20`}
+                                        className={`group relative p-3 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 text-gray-400 ${social.color} transition-all duration-300 hover:bg-white/10 hover:border-white/20`}
                                         aria-label={social.label}
+                                        title={social.description}
                                     >
                                         <social.icon size={20} />
+
+                                        {/* Tooltip */}
+                                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
+                                            {social.description}
+                                        </div>
                                     </motion.a>
                                 ))}
                             </div>
@@ -145,6 +195,13 @@ const Footer = ({ personalInfo }) => {
                                         <a
                                             href={item.href}
                                             className="text-gray-400 hover:text-purple-400 transition-colors duration-200 text-sm flex items-center group"
+                                            onClick={(e) => {
+                                                if (item.href.startsWith('#')) {
+                                                    e.preventDefault();
+                                                    const element = document.querySelector(item.href);
+                                                    element?.scrollIntoView({ behavior: 'smooth' });
+                                                }
+                                            }}
                                         >
                                             <span className="w-2 h-2 bg-purple-500 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
                                             {item.name}
@@ -155,7 +212,7 @@ const Footer = ({ personalInfo }) => {
                         </motion.div>
                     </div>
 
-                    {/* Services */}
+                    {/* Services & Contact */}
                     <div>
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
@@ -164,7 +221,7 @@ const Footer = ({ personalInfo }) => {
                             viewport={{ once: true }}
                         >
                             <h4 className="text-xl font-semibold text-white mb-6">Services</h4>
-                            <ul className="space-y-3">
+                            <ul className="space-y-3 mb-8">
                                 {services.map((service, index) => (
                                     <motion.li
                                         key={service.name}
@@ -185,7 +242,7 @@ const Footer = ({ personalInfo }) => {
                             </ul>
 
                             {/* Contact Info */}
-                            <div className="mt-8 space-y-3">
+                            <div className="space-y-3">
                                 <h5 className="text-lg font-medium text-white mb-4">Get In Touch</h5>
                                 <div className="flex items-center space-x-2 text-gray-400 text-sm">
                                     <Mail size={16} className="text-purple-400" />
@@ -215,13 +272,16 @@ const Footer = ({ personalInfo }) => {
                     <div className="max-w-2xl mx-auto text-center">
                         <h4 className="text-2xl font-bold text-white mb-4">Stay Updated</h4>
                         <p className="text-gray-400 mb-6">Get notified about new projects and tech insights</p>
-                        <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                        <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
                             <input
                                 type="email"
+                                name="email"
                                 placeholder="Enter your email"
+                                required
                                 className="flex-1 px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 transition-colors duration-200"
                             />
                             <motion.button
+                                type="submit"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 className="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium rounded-lg hover:shadow-lg transition-all duration-200 flex items-center justify-center space-x-2"
@@ -229,7 +289,7 @@ const Footer = ({ personalInfo }) => {
                                 <Send size={18} />
                                 <span>Subscribe</span>
                             </motion.button>
-                        </div>
+                        </form>
                     </div>
                 </motion.div>
 
@@ -254,6 +314,14 @@ const Footer = ({ personalInfo }) => {
                                 <Heart size={16} className="text-red-400 fill-current" />
                             </motion.div>
                             <span>using React & Framer Motion</span>
+                        </div>
+                        <div className="flex items-center space-x-4">
+                            <a href="#privacy" className="text-gray-400 hover:text-white text-sm transition-colors">
+                                Privacy Policy
+                            </a>
+                            <a href="#terms" className="text-gray-400 hover:text-white text-sm transition-colors">
+                                Terms of Service
+                            </a>
                         </div>
                     </div>
                 </motion.div>
